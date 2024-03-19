@@ -3,20 +3,32 @@ import sys
 import msvcrt
 
 
-def generateCLI(password, compresslevel, compressPath, size: str = '15g'):
-    generStr = f"7z a -v{size} -p{password} -mx{compresslevel} -mhe=on \"{compressPath}.7z\" \"{compressPath}\""
-    return generStr
-
-
-def getCompressPath() -> list[str]:
-    with open(".\path.txt", encoding='utf-8') as f:
-        compressPath: list[str] = f.read().splitlines()
-        f.close()
+def formatCompressPath(compressPath: list[str]):
+    for i in range(0, len(compressPath)):
+        if os.path.isdir(compressPath[i]):
+            compressPath[i] += "\\"
+        elif os.path.isfile(compressPath[i]):
+            compressPath[i] = compressPath[i].split(".")[0]
     return compressPath
 
 
+def generateCLI(password, compresslevel, compressPath, size: str = '15g'):
+    generStr = f"7z a -v{size} -p{password} -mx{compresslevel} -mhe=on \"{compressPath}.7z\" \"{compressPath}\"\n "
+    return generStr
+
+
+def getCompressPath():
+    with open("path.txt", encoding='utf-8') as f:
+        compressPath: list[str] = f.read().splitlines()
+        f.close()
+        compressfile = compressPath[:]
+        formatCompressPath(clearAllMark(compressPath))
+        clearAllMark(compressfile)
+    return compressfile, compressPath
+
+
 def replaceFile(runCLI):
-    with open(".\path.txt", "w", encoding='utf-8') as f:
+    with open("path.txt", "w", encoding='utf-8') as f:
         for text in runCLI:
             f.writelines(text)
     os.rename("path.txt", "run.cmd")
@@ -64,18 +76,27 @@ def swtichRunMode(runCLI, method="-r"):
         generateFile(runCLI)
 
 
+def clearAllMark(compressPath: list[str]):
+    for i in range(0, len(compressPath)):
+        compressPath[i] = compressPath[i].replace("\"", "")
+    return compressPath
+
+
 if __name__ == '__main__':
     args = sys.argv
     if os.path.exists("path.txt") is not True:
         print("(path.txt)目录文件不存在！\n请按任意键继续...")
-        # msvcrt.getch()
+        msvcrt.getch()
         os._exit(1)
-    compressPath: list[str] = getCompressPath()
+    compressfile, compressPath = getCompressPath()
+    print(compressfile)
+    print(compressPath)
+    os._exit(0)
     runCLI: list = []
     processedArgs, method = processCLIArgs(args[1:])
     processedArgs.pop(processedArgs.index(method))
     for i in range(0, len(compressPath)):
-        runCLI.append(generateCLI(1234, 0, compressPath[i])+"\n")
+        runCLI.append(generateCLI(1234, 0, compressPath[i]),)
     runCLI.insert(0, "chcp 65001\n")
     runCLI.append("pause\n")
-    swtichRunMode(runCLI, method=method)
+    # swtichRunMode(runCLI, method=method)
