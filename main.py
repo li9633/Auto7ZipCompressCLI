@@ -14,7 +14,7 @@ if __name__ == '__main__':
     runCLI: list = []
     processedArgs, method = processRunModeCLIArgs(args[1:])
     processedArgs.pop(processedArgs.index(method))
-    processCLIArgs(args[1:])
+    processCLIArgs(processedArgs)
     for i in range(0, len(compressPath)):
         runCLI.append(generateCLI(1234, 0,  compressFile[i], compressPath[i]))
     runCLI.insert(0, "chcp 65001\n")

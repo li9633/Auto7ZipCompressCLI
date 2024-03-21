@@ -47,16 +47,29 @@ def swtichRunMode(runCLI, method):
         generateFile(runCLI)
 
 
+def helpMenu(validCLI: list):
+    print(f"使用{validCLI}这些有效选项来控制生成的脚本")
+    for i in range(0, len(validCLI)):
+        if validCLI[i] == "-p":
+            print(f"{validCLI[i]} 为压缩文件设置一个密码,例子 {validCLI[i]}1234")
+        if validCLI[i] == "-v":
+            print(f"{validCLI[i]} 为压缩文件设置分卷包,例子 {validCLI[i]}1g")
+        if validCLI[i] == "-h":
+            print(f"{validCLI[i]} 显示此帮助")
+
+
 def processCLIArgs(args: list[str]):
     validCLI: list[str] = ["-p", "-v", "-h"]
-    arg = str
-    try:
-        for arg in args:
-            for i in range(0, args):
-                if arg.find(validCLI[i]) == -1:
-                    raise Exception("Not Found Arg")
-                else:
-                    None
-
-    except Exception:
-        print("参数传入错误")
+    arg = str()
+    i = 0
+    option = {"password": None, "size": None}
+    for arg in args:
+        for i in range(0, len(validCLI)):
+            if arg.find(validCLI[i]) != -1:
+                if arg[arg.find(validCLI[i]):len(validCLI[i])] == "-p":
+                    option["password"] = arg.replace("-p", "")
+                if arg[arg.find(validCLI[i]):len(validCLI[i])] == "-v":
+                    option["size"] = arg.replace("-v", "")
+                if arg[arg.find(validCLI[i]):len(validCLI[i])] == "-h":
+                    helpMenu(validCLI)
+    return option

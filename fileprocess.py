@@ -1,6 +1,7 @@
 
 import os
 
+
 def clearAllMark(compressPath: list[str]):
     for i in range(0, len(compressPath)):
         compressPath[i] = compressPath[i].replace("\"", "")
@@ -17,7 +18,7 @@ def formatCompressPath(compressPath: list[str]):
 def formatCompressFile(compressFile: list[str]):
     for i in range(0, len(compressFile)):
         if os.path.isfile(compressFile[i]):
-            compressFile[i] = compressFile[i].split(".")[0]
+            compressFile[i] = compressFile[i].split(".")[:-1]
     return compressFile
 
 
