@@ -14,9 +14,10 @@ if __name__ == '__main__':
     runCLI: list = []
     processedArgs, method = processRunModeCLIArgs(args[1:])
     processedArgs.pop(processedArgs.index(method))
-    processCLIArgs(processedArgs)
+    option = processCLIArgs(processedArgs)
     for i in range(0, len(compressPath)):
-        runCLI.append(generateCLI(1234, 0,  compressFile[i], compressPath[i]))
+        runCLI.append(generateCLI(
+            compressFile[i], compressPath[i], password=option["password"], size=option["size"]))
     runCLI.insert(0, "chcp 65001\n")
     runCLI.append("pause\n")
     swtichRunMode(runCLI, method)

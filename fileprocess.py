@@ -18,16 +18,16 @@ def formatCompressPath(compressPath: list[str]):
 def formatCompressFile(compressFile: list[str]):
     for i in range(0, len(compressFile)):
         if os.path.isfile(compressFile[i]):
-            compressFile[i] = compressFile[i].split(".")[:-1]
+            compressFile[i] = compressFile[i][0:compressFile[i].rfind(".")]
     return compressFile
 
 
 def getCompressPath():
     with open("path.txt", encoding='utf-8') as f:
         compressPath: list[str] = f.read().splitlines()
-        compressFile = compressPath[:]
+        compressFile: list[str] = compressPath[:]
         formatCompressPath(clearAllMark(compressPath))
-        compressFile = formatCompressFile(clearAllMark(compressFile))
+        formatCompressFile(clearAllMark(compressFile))
     return compressFile, compressPath
 
 

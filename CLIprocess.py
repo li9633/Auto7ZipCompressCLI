@@ -1,8 +1,17 @@
 from fileprocess import generateFile, replaceFile
 
 
-def generateCLI(password, compresslevel, compressPath: str, compressFile: str, size: str = '15g'):
-    generStr = f"7z a -v{size} -p{password} -mx{compresslevel} -mhe=on \"{compressPath}.7z\" \"{compressFile}\"\n"
+def generateCLI(compressPath: str, compressFile: str, password=None, compresslevel=None, size: str = None):
+    generStr = "7z a "
+    if password is not None:
+        generStr += f"-p{password} "
+    if compresslevel is not None:
+        generStr += f"-mx{compresslevel} "
+    if size is not None:
+        generStr += f"-v{size} "
+    if True:
+        generStr += f"-mhe=on "
+    generStr += f"\"{compressPath}.7z\" \"{compressFile}\"\n"
     return generStr
 
 
