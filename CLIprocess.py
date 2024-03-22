@@ -57,7 +57,12 @@ def swtichRunMode(runCLI, method):
 
 
 def helpMenu(validCLI: list):
-    print(f"使用{validCLI}这些有效选项来控制生成的脚本")
+    print("使用\'-r\' , \'-p\' 选项来控制脚本文件的生成方式")
+    print("\'-r\' 将path.txt文件替换为run.cmd")
+    print("\'-p\' 生成一个新的run.cmd文件,path.txt将不会被改变")
+    print("不指定生成方式时，将默认使用\'-r\'")
+    print("--------------------------------------------------------------------")
+    print(f"使用{validCLI}有效选项来控制批量压缩的方式")
     for i in range(0, len(validCLI)):
         if validCLI[i] == "-p":
             print(f"{validCLI[i]} 为压缩文件设置一个密码,例子 {validCLI[i]}1234")
@@ -67,12 +72,15 @@ def helpMenu(validCLI: list):
             print(f"{validCLI[i]} 显示此帮助")
         if validCLI[i] == "-mhe":
             print(f"{validCLI[i]} 关闭加密文件头 默认:开启")
+    print("--------------------------------------------------------------------")
 
 
 def processCLIArgs(args: list[str]):
-    validCLI: list[str] = ["-p", "-v", "-h", "-mhe"]
+    validCLI: list[str] = ["-h", "-p", "-v", "-mhe"]
     arg = str()
     i = 0
+    isVaild = 0
+    isVaildArg = []
     option = {"password": None, "size": None, "mhe": True}
     for arg in args:
         for i in range(0, len(validCLI)):
@@ -85,4 +93,15 @@ def processCLIArgs(args: list[str]):
                     helpMenu(validCLI)
                 if arg[arg.find(validCLI[i]):len(validCLI[i])] == "-mhe":
                     option["mhe"] = False
-    return option
+                # isVaild -= 1
+            else:
+                isVaild += 1
+                try:
+                    isVaildArg.index(arg)
+                except ValueError:
+                    isVaildArg.append(arg)
+
+    if isVaild == len(validCLI)*len(args):
+        return ValueError, isVaildArg
+    else:
+        return option, None
