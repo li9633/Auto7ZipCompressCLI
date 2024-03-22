@@ -35,6 +35,8 @@ def replaceFile(runCLI):
     with open("path.txt", "w", encoding='utf-8') as f:
         for text in runCLI:
             f.writelines(text)
+    if os.path.exists("run.cmd"):
+        os.remove("run.cmd")
     os.rename("path.txt", "run.cmd")
 
 
