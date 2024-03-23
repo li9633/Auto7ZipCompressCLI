@@ -1,7 +1,7 @@
 from fileprocess import generateFile, replaceFile
 
 
-def generateCLI(compressPath: str, compressFile: str, password=None, compresslevel=None, size: str = None):
+def generateCLI(compressPath: str, compressFile: str, password=None, compresslevel=None, size: str = None, mhe=True):
     generStr = "7z a "
     if password is not None:
         generStr += f"-p{password} "
@@ -9,7 +9,7 @@ def generateCLI(compressPath: str, compressFile: str, password=None, compresslev
         generStr += f"-mx{compresslevel} "
     if size is not None:
         generStr += f"-v{size} "
-    if True:
+    if mhe is True:
         generStr += f"-mhe=on "
     generStr += f"\"{compressPath}.7z\" \"{compressFile}\"\n"
     return generStr
@@ -83,6 +83,7 @@ def processCLIArgs(args: list[str]):
     isVaildArg = []
     option = {"password": None, "size": None, "mhe": True}
     for arg in args:
+        isVaild = 0
         for i in range(0, len(validCLI)):
             if arg.find(validCLI[i]) != -1:
                 if arg[arg.find(validCLI[i]):len(validCLI[i])] == "-p":
@@ -93,15 +94,13 @@ def processCLIArgs(args: list[str]):
                     helpMenu(validCLI)
                 if arg[arg.find(validCLI[i]):len(validCLI[i])] == "-mhe":
                     option["mhe"] = False
-                # isVaild -= 1
+                    isVaild -= 1
             else:
                 isVaild += 1
-                try:
-                    isVaildArg.index(arg)
-                except ValueError:
-                    isVaildArg.append(arg)
+        if isVaild == len(validCLI):
+            isVaildArg.append(arg)
 
-    if isVaild == len(validCLI)*len(args):
+    if len(isVaildArg) != 0:
         return ValueError, isVaildArg
     else:
         return option, None

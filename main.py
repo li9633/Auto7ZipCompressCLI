@@ -1,5 +1,4 @@
 import sys
-import msvcrt
 from fileprocess import *
 from CLIprocess import *
 
@@ -14,21 +13,15 @@ if __name__ == '__main__':
     except ValueError:
         None
     else:
-        # print("请按任意键继续...")
-        # msvcrt.getch()
         os._exit(1)
 
     if option is ValueError:
         print("传入参数错误！")
         print(f"未知的参数->\'{falidArgs}\'")
-        # print("请按任意键继续...")
-        # msvcrt.getch()
         os._exit(1)
 
     if os.path.exists("path.txt") is not True:
         print("(path.txt)目录文件不存在！")
-        # print("请按任意键继续...")
-        # msvcrt.getch()
         os._exit(1)
 
     compressFile, compressPath = getCompressPath()
@@ -36,7 +29,7 @@ if __name__ == '__main__':
 
     for i in range(0, len(compressPath)):
         runCLI.append(generateCLI(
-            compressFile[i], compressPath[i], password=option["password"], size=option["size"]))
+            compressFile[i], compressPath[i], password=option["password"], size=option["size"], mhe=option["mhe"]))
     runCLI.insert(0, "chcp 65001\n")
-    runCLI.append("pause\n")
+    runCLI.append("pause")
     swtichRunMode(runCLI, method)
