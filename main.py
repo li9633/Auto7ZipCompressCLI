@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     for i in range(0, len(compressPath)):
         runCLI.append(generateCLI(
-            compressFile[i], compressPath[i], password=option["password"], size=option["size"], mhe=option["mhe"]))
+            compressFile[i], compressPath[i], password=option["password"], size=option["size"],compresslevel=option["level"], mhe=option["mhe"]))
     runCLI.insert(0, "chcp 65001\n")
     runCLI.append("pause")
     swtichRunMode(runCLI, method)

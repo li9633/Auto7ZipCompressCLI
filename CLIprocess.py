@@ -68,6 +68,8 @@ def helpMenu(validCLI: list):
             print(f"{validCLI[i]} 为压缩文件设置一个密码,例子 {validCLI[i]}1234")
         if validCLI[i] == "-v":
             print(f"{validCLI[i]} 为压缩文件设置分卷包,例子 {validCLI[i]}1g")
+        if validCLI[i] == "-mx":
+            print(f"{validCLI[i]} 压缩时指定压缩等级 0\|1\|3\|5\|7\|9  0最快 ，9文件体积最小")
         if validCLI[i] == "-h":
             print(f"{validCLI[i]} 显示此帮助")
         if validCLI[i] == "-mhe":
@@ -76,12 +78,12 @@ def helpMenu(validCLI: list):
 
 
 def processCLIArgs(args: list[str]):
-    validCLI: list[str] = ["-h", "-p", "-v", "-mhe"]
+    validCLI: list[str] = ["-h", "-p", "-v", "-mx", "-mhe"]
     arg = str()
     i = 0
     isVaild = 0
     isVaildArg = []
-    option = {"password": None, "size": None, "mhe": True}
+    option = {"password": None, "size": None, "level": None, "mhe": True}
     for arg in args:
         isVaild = 0
         for i in range(0, len(validCLI)):
@@ -92,6 +94,8 @@ def processCLIArgs(args: list[str]):
                     option["size"] = arg.replace("-v", "")
                 if arg[arg.find(validCLI[i]):len(validCLI[i])] == "-h":
                     helpMenu(validCLI)
+                if arg[arg.find(validCLI[i]):len(validCLI[i])] == "-mx":
+                    option["level"] = arg.replace("-mx", "")
                 if arg[arg.find(validCLI[i]):len(validCLI[i])] == "-mhe":
                     option["mhe"] = False
                     isVaild -= 1

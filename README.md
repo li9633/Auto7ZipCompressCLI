@@ -1,6 +1,7 @@
 # Auto7ZipCompressCLI
 ## 关于本项目
 Auto7ZipCompressCLI是一个批量生成压缩7z文件命令行的控制台程序
+
 可用于快速对每个文件夹或每个文件单独压缩
 
 ## 配置环境变量
@@ -20,26 +21,33 @@ Auto7ZipCompressCLI是一个批量生成压缩7z文件命令行的控制台程�
 -n|生成一个新的**run.cmd**文件，**path.txt**将不会被改变
 -p{password}|为压缩文件设置一个密码，例子 **-p1234**
 -v{size}|为压缩文件设置分卷包，例子 **-v1g**
+-mx{level}|压缩时指定压缩等级 0\|1\|3\|5\|7\|9  **0最快** **9文件体积最小**
 -mhe|关闭加密文件头     默认 **开启**
 
 ## 使用案例
 
 要将以下文件或文件夹压缩
+
 <img src="resource\a.png" alt="第一步" style="zoom:80%;" />
 
 选择你要压缩的文件或文件夹后，按住Shift+鼠标右键，选择复制文件地址
+
 <img src="resource\c.png" alt="第三步" style="zoom:80%;" />
 
 在当前目录创建path.txt，将刚才复制的路径粘贴到path.txt中，保存后退出
+
 <img src="resource\d.png" style="zoom:80%;" />
 
 打开CMD或PowerShell，并进入该目录
+
 <img src="resource\b.png" alt="第二部" style="zoom:80%;" /> 
 
 输入 **a7z -n -p123**
+
 <img src="resource\e.png" alt="第五步" style="zoom:80%;" />
 
 如果以上操作都没有问题，那么该目录下会生成一个名为 **run.cmd**的脚本文件，脚本内容已经自动生成，直接运行即可
+
 <img src="resource\f.png" style="zoom:80%;" />
 
 ***

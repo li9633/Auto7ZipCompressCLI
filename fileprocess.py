@@ -38,9 +38,11 @@ def replaceFile(runCLI):
     if os.path.exists("run.cmd"):
         os.remove("run.cmd")
     os.rename("path.txt", "run.cmd")
+    print(f"7z命令行脚本替换成功!，文件位于:{os.getcwd()}\\run.cmd")
 
 
 def generateFile(runCLI):
     with open("run.cmd", "w", encoding="utf-8") as f:
         for text in runCLI:
             f.writelines(text)
+    print(f"7z命令行脚本生成成功!，文件位于:{os.getcwd()}\\run.cmd")
